@@ -28,19 +28,13 @@ public class HelloApplication extends Application {
 
 
 
-//    private BooleanProperty isFirstNameTv;
-//    private BooleanProperty isLastNameTv;
-//    private BooleanProperty isEmailTv;
-//    private BooleanProperty isDateOfBirthTv;
-//    private BooleanProperty isZipCodeTv;
-
 
 
      //Regular Expressions for Validation
     final String firstName_regex = "[A-Za-z]{2,25}";
     final String lastName_regex = "[A-Za-z]{2,25}";
     final String email_regex = "(\\w+)@(Farmingdale).(edu)";
-    final String dateOfBirth_Regex = "(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(\\d{4})";
+    final String dateOfBirth_Regex = "(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(\\d{4})";
     final String zipCode_regex = "\\d{5}";
 
     public boolean checkFirstName() {
@@ -93,6 +87,7 @@ public class HelloApplication extends Application {
         email = new Label("Email");
         dateOfBirth = new Label("Date of Birth (MM/DD/YYYY)");
         zipCode = new Label("Zip Code");
+        lblMsg = new Label();
 
         firstName_tv = new TextField();
         firstName_tv.setMinWidth(300);
@@ -106,8 +101,9 @@ public class HelloApplication extends Application {
         zipCode_tv.setMinWidth(300);
 
         // Create the "Add" button
-        addBtn = new Button("Add");
+        addBtn = new Button("Register");
 
+        //Event handling when text value changes
         firstName_tv.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
@@ -166,19 +162,13 @@ public class HelloApplication extends Application {
             }
         });
 
-        lblMsg = new Label();
-
-
-
-
-
-
-
 
 
 
         // Handle the "Add" button click
         addBtn.setOnAction(event -> {handleAddButtonClick();});
+
+
 
         // Layout the form in a GridPane
         GridPane grid = new GridPane();
@@ -204,8 +194,10 @@ public class HelloApplication extends Application {
         primaryStage.show();
 
     }
-
+//     Event handler for register button
     private void handleAddButtonClick() {
+        // Creating an Alert object
+        Alert regAlert = new Alert(Alert.AlertType.INFORMATION);
         msg="";
         checkFirstName();
         checkLastName();
@@ -214,6 +206,8 @@ public class HelloApplication extends Application {
         checkZipCode();
         lblMsg.setText(msg);
         if(checkFirstName() && checkLastName() &&checkEmail() && checkDateOfBirth() && checkZipCode()) {
+            regAlert.setContentText("Successfully Registered");
+            regAlert.show();
 
         }
 
